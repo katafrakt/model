@@ -7,5 +7,9 @@ Hanami::Model.migration do
 
       column :url, String
     end
+
+    alter_table :users do
+      add_foreign_key :avatar_id, :avatars, on_delete: :cascade
+    end
   end
 end

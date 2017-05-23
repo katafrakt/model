@@ -62,6 +62,22 @@ class Label < Hanami::Entity
 end
 
 class UserRepository < Hanami::Repository
+  associations do
+    has_one :avatar
+  end
+
+  def find_with_avatar(id)
+    aggregate(:avatar).where(users__id: id).as(User).one
+  end
+
+  def create_avatar(user, data)
+    assoc(:avatar, user).add(data)
+  end
+
+  def avatar_for(user)
+    assoc(:avatar, user).one
+  end
+
   def by_name(name)
     users.where(name: name)
   end
@@ -76,6 +92,9 @@ class UserRepository < Hanami::Repository
 end
 
 class AvatarRepository < Hanami::Repository
+  associations do
+    has_one :user
+  end
 end
 
 class AuthorRepository < Hanami::Repository

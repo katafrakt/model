@@ -24,6 +24,12 @@ module Hanami
         def belongs_to(relation, *)
           @repository.__send__(:relations, Hanami::Utils::String.new(relation).pluralize.to_sym)
         end
+
+        # @since x.x.x
+        # @api private
+        def has_one(relation, *)
+          @repository.__send__(:relations, Hanami::Utils::String.new(relation).pluralize.to_sym)
+        end
       end
     end
   end

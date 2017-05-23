@@ -1,4 +1,5 @@
 require 'rom-sql'
+require 'hanami/model/associations/has_one'
 require 'hanami/model/associations/has_many'
 require 'hanami/model/associations/belongs_to'
 
@@ -24,6 +25,9 @@ module Hanami
       # @api private
       def self.lookup(association)
         case association
+        # OneToOne has to come first since it's a subclass of OneToMany
+        when ROM::SQL::Association::OneToOne
+          Associations::HasOne
         when ROM::SQL::Association::OneToMany
           Associations::HasMany
         when ROM::SQL::Association::ManyToOne
